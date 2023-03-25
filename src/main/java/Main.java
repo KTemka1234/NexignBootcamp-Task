@@ -20,12 +20,12 @@ public class Main {
                 line = reader.readLine();
                 // Если ключа нет, создаем новый список и добавляем его в HashMap.
                 // Если ключ есть, добавляем новую запись в конец списка
-                String phone = cdr.phone();
+                String phone = cdr.getPhone();
                 LinkedList<CallDataRecord> cdrList = null;
                 if (!cdrHashMap.containsKey(phone)) {
                     cdrList = new LinkedList<>();
                     cdrList.add(cdr);
-                    cdrHashMap.put(cdr.phone(), cdrList);
+                    cdrHashMap.put(cdr.getPhone(), cdrList);
                 } else {
                     cdrList = cdrHashMap.get(phone);
                     cdrList.add(cdr);
@@ -71,11 +71,15 @@ public class Main {
         if (tariffType.length() != 2) {
             throw new ParseException("Invalid tariff type", 0);
         }
-        return switch (tariffType) {
-            case "06" -> TariffType.UNLIMITED;
-            case "03" -> TariffType.PER_MINUTE;
-            case "11" -> TariffType.REGULAR;
-            default -> throw new ParseException("Invalid tariff type", 0);
-        };
+        switch (tariffType) {
+            case "06":
+                return TariffType.UNLIMITED;
+            case "03":
+                return TariffType.PER_MINUTE;
+            case "11":
+                return TariffType.REGULAR;
+            default:
+                throw new ParseException("Invalid tariff type", 0);
+        }
     }
 }
