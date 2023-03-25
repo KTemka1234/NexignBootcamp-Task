@@ -7,6 +7,5 @@ public class CallDataRecordComparator implements Comparator<CallDataRecord> {
         if (result == 0)
             result = cdr1.callStartTime().compareTo(cdr2.callStartTime());
         return result;
-        //TODO: Проверить логику работы
     }
 }

@@ -27,4 +27,15 @@ public enum TariffType {
                     100 * costPerMinute + (minutes - 100) * costPerMinute;
         }
     }
+
+    @Override
+    public String toString() {
+        if (this == UNLIMITED) {
+            return "06";
+        } else if (this == PER_MINUTE) {
+            return "03";
+        } else {
+            return "11";
+        }
+    }
 }

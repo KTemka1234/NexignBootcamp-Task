@@ -9,10 +9,11 @@ import java.util.LinkedList;
 
 public class Main {
     public static void main(String[] args) {
-        String file = "cdr.txt";
+        String filePath = "src/main/resources/cdr.txt";
         HashMap<String, LinkedList<CallDataRecord>> cdrHashMap = new HashMap<>();
         CallDataRecord cdr = null;
-        try(BufferedReader reader = new BufferedReader(new FileReader(file))) {
+        // Читаем файл cdr.txt построчно, и добавляем в cdrHashMap
+        try(BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line = reader.readLine();
             while (line != null) {
                 cdr = parseCDRLine(line);
@@ -32,15 +33,17 @@ public class Main {
             }
         } catch (ParseException ex) {
             System.out.println("CDR line parsing error: " + ex.getMessage());
+            return;
         } catch(IOException ex) {
             System.out.println("Error while reading file: " + ex.getMessage());
+            return;
         }
-        ReportGenerator.generateReport("reports", cdrHashMap);
-        //TODO: Проверить логику работы
+        ReportGenerator.generateReports("reports", cdrHashMap);
     }
 
+    // Парсер строки из файла cdr.txt
     private static CallDataRecord parseCDRLine(String record) throws ParseException {
-        String[] CDRParts = record.split(" ");
+        String[] CDRParts = record.split(", ");
         if (CDRParts.length != 5)
             throw new ParseException("Invalid CDR line", 0);
         if (!checkCallType(CDRParts[0]))
